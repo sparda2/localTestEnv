@@ -68,21 +68,25 @@ module.exports = {
       .frame('msg_body')
         .waitForElementVisible('.front-row-h2b-button',3000)
 
-         // open new window button
-        // .verify.visible('.open-new-window')
-        // .getAttribute('.open-new-window', 'href', function (link) {
-        // newWindowUrl = link.value;
-        // })
-        // .click('.open-new-window')
-        // .windowHandles(function(result) {
-        //     var newWindow;
-        //     this.verify.equal(result.value.length, 2, 'There should be 2 windows   open');
-        //     newWindow = result.value[1];
-        //     this.switchWindow(newWindow);
-        //     this.verify.urlContains(newWindowUrl);
-        // })
-
+        // open new window button
+        .verify.visible('.front-row-h2b-button')
+        .getAttribute('.front-row-h2b-button', 'href', function (link) {
+        newWindowUrl = link.value;
+        })
         .click('.front-row-h2b-button')
+        .windowHandles(function(result) {
+            var newWindow;
+            this.verify.equal(result.value.length, 3, 'There should be 3 windows open');
+            newWindow = result.value[2];
+            this.switchWindow(newWindow);
+            this.verify.containsText('body > h1','Email Validated!')
+            this.waitForElementVisible('#environment',10000)
+            this.click('#environment option[value="us_in_school"]')
+            this.verify.visible('#zip')
+
+        })
+
+        
       .frame(null)
       // .waitForElementVisible('body',1000)
       // .verify.containsText('body > h1','Email Validated!')
