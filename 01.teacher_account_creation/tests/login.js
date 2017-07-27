@@ -1,7 +1,7 @@
 module.exports = {
 
   '@tags': ['signup'],
-  'I am in the Front Row page': function (client) {
+  'GIVEN I am in the Front Row page': function (client) {
     var data = client.globals;
 
     client
@@ -17,8 +17,6 @@ module.exports = {
   '@tags': ['signup'],
   'WHEN I signup using valid NOT google credentials': function (client) {
     var data = client.globals;
-    
-
     client
       //WHEN I signup using valid NOT google credentials
       .click('body > div.wrap > section.hero > div > div > div.hero_mainCol > div.hero_button > a')
@@ -32,15 +30,21 @@ module.exports = {
       .setValue('#password', data.pwd)
       .setValue('#password-confirmation', data.pwd)
       .click('.btn-fr')
+          
+  },
+
+  'THEN I should see an account creation success message':function(client){
+    var data = client.globals;
+    client
       .waitForElementVisible('.introduction-panel-title', 5000)
-      .verify.containsText('.introduction-panel-title', 'Introduction to Front Row')
+      .verify.containsText('.introduction-panel-title', 'Introduction to Front Row') //User has logged in and his account was created.
       .pause(3000)
-      // .end();//
-     
+      
+
   },
 
   '@tags': ['email'],
-  'THEN My email is verified': function (client) {
+  'AND receive an account activation email': function (client) {
     var data = client.globals;
     var URL1 = data.urls.mailEngine;
     var WINDOW1 = 'wMail';
@@ -95,6 +99,8 @@ module.exports = {
 
         
       .frame(null)
+
+      // .end();//
       // .waitForElementVisible('body',1000)
       // .verify.containsText('body > h1','Email Validated!')
       // .useXpath() // every selector now must be XPath
