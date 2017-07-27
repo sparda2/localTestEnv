@@ -22,8 +22,8 @@ module.exports = {
     client
       //WHEN I signup using valid NOT google credentials
       .click('body > div.wrap > section.hero > div > div > div.hero_mainCol > div.hero_button > a')
-      .waitForElementVisible('body', 1000)
-      .waitForElementVisible('#first-name', 1000)
+      .waitForElementVisible('body', 5000)
+      .waitForElementVisible('#first-name', 2000)
       .assert.title('Front Row Teacher Dashboard')
       .setValue('#first-name', data.name)
       .setValue('#last-name', data.lastName)
@@ -80,10 +80,17 @@ module.exports = {
             newWindow = result.value[2];
             this.switchWindow(newWindow);
             this.verify.containsText('body > h1','Email Validated!')
-            this.waitForElementVisible('#environment',10000)
+            this.waitForElementVisible('#environment',15000)
             this.click('#environment option[value="us_in_school"]')
             this.verify.visible('#zip')
-
+            this.setValue('#zip','94103')
+            this.waitForElementVisible('#schoolInput option[value="131748"]',2000)
+            this.click('#schoolInput option[value="131748"]')
+            var teacher = 'body > div:nth-child(22) > div > div.fade.in.modal > div > div > div.modal-body > form > div:nth-child(3) > div:nth-child(2) > select > option[value="teacher"]'
+            this.click(teacher)
+            this.click('#acknowledge')
+            this.click('.btn-fr.btn-fr-primary-info.btn-block.chunky-button')
+            this.verify.containsText('.page-title','Roster')
         })
 
         
@@ -95,7 +102,8 @@ module.exports = {
       //   .verify.visible('//input[@name="email"]')
       // .useCss()      // we're back to CSS now
 
-      
+      // body > div:nth-child(19) > div > div.fade.in.modal > div > div > div.modal-body > form > div:nth-child(3) > div:nth-child(2) > select
+      // /html/body/div[5]/div/div[2]/div/div/div[2]/form/div[3]/div[2]/select
 
 
     // client
