@@ -26,6 +26,8 @@ module.exports = {
             .click('.front-row-h2b-button')
         .frame(null)
 
+        //change
+
             // .useXpath() // every selector now must be XPath
             // .click('//a[text()="Confirm Account"]') 
             // .useCss()      // we're back to CSS now

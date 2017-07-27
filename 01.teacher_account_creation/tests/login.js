@@ -1,5 +1,6 @@
 module.exports = {
 
+  '@tags': ['signup'],
   'I am in the Front Row page': function (client) {
     var data = client.globals;
 
@@ -13,8 +14,10 @@ module.exports = {
       // .end();  
   },
 
+  '@tags': ['signup'],
   'WHEN I signup using valid NOT google credentials': function (client) {
     var data = client.globals;
+    
 
     client
       //WHEN I signup using valid NOT google credentials
@@ -29,14 +32,14 @@ module.exports = {
       .setValue('#password', data.pwd)
       .setValue('#password-confirmation', data.pwd)
       .click('.btn-fr')
-      .waitForElementVisible('body', 1000)
-      // .pause()
-      //.verify.containsText('.introduction-panel-title', 'Introduction to Front Row')
-      // .pause()
+      .waitForElementVisible('.introduction-panel-title', 5000)
+      .verify.containsText('.introduction-panel-title', 'Introduction to Front Row')
+      .pause(3000)
       // .end();//
      
   },
 
+  '@tags': ['email'],
   'THEN My email is verified': function (client) {
     var data = client.globals;
     var URL1 = data.urls.mailEngine;
@@ -54,32 +57,39 @@ module.exports = {
       .verify.title('Mailinator')
       .setValue('#inboxfield', data.email)
       .click('button.btn.btn-dark')
-      .waitForElementVisible('body',3000)
-      .verify.visible('#query_data > div:nth-child(4)')
-      .verify.containsText('#query_data > div:nth-child(4)',data.email)
-      .click('.all_message-min')
-      .waitForElementVisible('.logo',3000)
-      .switchWindow(WINDOW1).verify.visible('.logo')
+      .waitForElementVisible('body',2000)
+      .waitForElementVisible('#query_data > div:nth-child(4)',2000)
+      .verify.containsText('#query_data > div:nth-child(4)', data.email)
+      .useXpath() // every selector now must be XPath
+        .click('//div[contains(.,"Your Front Row teacher account is almost ready")]//*[@class="all_message-min_text all_message-min_text-3"]')
+      .useCss()      // we're back to CSS now
       
+      //clicking Confirm Account button inside the email's iframe
+      .frame('msg_body')
+        .waitForElementVisible('.front-row-h2b-button',3000)
 
+         // open new window button
+        // .verify.visible('.open-new-window')
+        // .getAttribute('.open-new-window', 'href', function (link) {
+        // newWindowUrl = link.value;
+        // })
+        // .click('.open-new-window')
+        // .windowHandles(function(result) {
+        //     var newWindow;
+        //     this.verify.equal(result.value.length, 2, 'There should be 2 windows   open');
+        //     newWindow = result.value[1];
+        //     this.switchWindow(newWindow);
+        //     this.verify.urlContains(newWindowUrl);
+        // })
+
+        .click('.front-row-h2b-button')
+      .frame(null)
+      // .waitForElementVisible('body',1000)
+      // .verify.containsText('body > h1','Email Validated!')
       // .useXpath() // every selector now must be XPath
-      // .waitForElementVisible('//a[text()="Confirm Account"]',3000)
-      // .click('//a[text()="Confirm Account"]') 
+      //   .waitForElementVisible('//input[@name="email"]')
+      //   .verify.visible('//input[@name="email"]')
       // .useCss()      // we're back to CSS now
-      
-      
-      //div.all_message-min_text 
-
-      //.waitForElementVisible('#msgpane',2000)
-      
-      // .verify.containsText('#msgpane > div:nth-child(1) > div:nth-child(1)','Your Front Row teacher account is almost ready')
-      
-      
-// body > div > table:nth-child(1) > tbody > tr > td > table.content > tbody > tr > td > table > tbody > tr > td
-// /html/body/div/table[1]/tbody/tr/td/table[2]/tbody/tr/td/table/tbody/tr/td
-
-// body > div > table:nth-child(1) > tbody > tr > td > table.content > tbody > tr > td > table > tbody > tr > td > a
-// /html/body/div/table[1]/tbody/tr/td/table[2]/tbody/tr/td/table/tbody/tr/td/a
 
       
 
@@ -87,11 +97,12 @@ module.exports = {
     // client
     //   .perform(function (client, done) {
     //     console.log('All done!');
+    //     alert('All done!');
         
     //   });
       
-  },
   
-
+  
+  }
 
 };
