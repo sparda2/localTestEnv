@@ -3,20 +3,20 @@ module.exports = {
   '@tags': ['signup'],
   'GIVEN I am in the Front Row page': function (client) {
     var data = client.globals;
-
+    
     client
       //GIVEN I am in the Front Row page
       
       .url(data.urls.login)
       .waitForElementVisible('body', 1000)
       .assert.title('Front Row Education | Reach Every Student at Their Level')
-
-      // .end();  
   },
 
+  
   '@tags': ['signup'],
   'WHEN I signup using valid NOT google credentials': function (client) {
     var data = client.globals;
+    
     client
       //WHEN I signup using valid NOT google credentials
       .click('body > div.wrap > section.hero > div > div > div.hero_mainCol > div.hero_button > a')
@@ -30,18 +30,19 @@ module.exports = {
       .setValue('#password', data.pwd)
       .setValue('#password-confirmation', data.pwd)
       .click('.btn-fr')
-          
   },
 
+
+  '@tags': ['signup'],
   'THEN I should see an account creation success message':function(client){
     var data = client.globals;
+
     client
       .waitForElementVisible('.introduction-panel-title', 5000)
       .verify.containsText('.introduction-panel-title', 'Introduction to Front Row') //User has logged in and his account was created.
       .pause(3000)
-      
-
   },
+
 
   '@tags': ['email'],
   'AND receive an account activation email': function (client) {
@@ -96,31 +97,8 @@ module.exports = {
             this.click('.btn-fr.btn-fr-primary-info.btn-block.chunky-button')
             this.verify.containsText('.page-title','Roster')
         })
-
-        
       .frame(null)
-
-      // .end();//
-      // .waitForElementVisible('body',1000)
-      // .verify.containsText('body > h1','Email Validated!')
-      // .useXpath() // every selector now must be XPath
-      //   .waitForElementVisible('//input[@name="email"]')
-      //   .verify.visible('//input[@name="email"]')
-      // .useCss()      // we're back to CSS now
-
-      // body > div:nth-child(19) > div > div.fade.in.modal > div > div > div.modal-body > form > div:nth-child(3) > div:nth-child(2) > select
-      // /html/body/div[5]/div/div[2]/div/div/div[2]/form/div[3]/div[2]/select
-
-
-    // client
-    //   .perform(function (client, done) {
-    //     console.log('All done!');
-    //     alert('All done!');
-        
-    //   });
-      
-  
-  
+      // .end()
   }
 
 };
